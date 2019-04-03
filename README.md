@@ -12,21 +12,31 @@ lanproxy是一个将局域网个人电脑、服务器代理到公网的内网穿
 - 发布包下载地址 https://github.com/ffay/lanproxy/releases
 
 ### 使用
+1.拉取git代码 
+git clone 
+2.打包
+mvn clean package
+拷贝distribution/proxy-server-0.1目录到公网服务器
+拷贝distribution/proxy-client-0.1目录到内网服务器
+3.进入lanproxy-master/distribution/proxy-server-0.1/conf准备修改配置
+4.进入lanproxy-master/distribution/proxy-server-0.1/bin在公网服务器启动
+sh startup.sh
+5.访问公网ip:config.server.port默认8090
+6.添加客户端，随机生成密钥
+7.修改proxy-client-0.1的client.key为密钥
+8..进入lanproxy-master/distribution/proxy-server-0.1/bin在内网服务器启动
+sh startup.sh
+9.管理页面显示在线
+10.配置需要映射的端口  外网端口是需要访问的端口   内外使用127.0.0.1:业务端口
 
-#### 获取发布包
-
--	拉取源码，运行 mvn package，打包后的资源放在distribution目录中，包括client和server
--	或直接下载发布包  https://github.com/ffay/lanproxy/releases
-
-#### 配置
+访问新的映射端口即可。（注意防火墙。）
+注：多台内外服务器的映射情况目前没试过是否冲突。
 
 ##### server配置
-
 server的配置文件放置在conf目录中，配置 config.properties
 
 ```properties
 server.bind=0.0.0.0
-
 #与代理客户端通信端口
 server.port=4900
 
